@@ -4,7 +4,8 @@ import {ThemeProvider} from '@shopify/restyle';
 import {theme} from './src/theme/theme';
 
 import {Text} from './src/components/Text/Text';
-import {Button} from './src/components/Button/Button';
+import {Box} from './src/components/Box/Box';
+import {Icon} from './src/components/Icon/Icon';
 
 function App(): JSX.Element {
   return (
@@ -14,15 +15,10 @@ function App(): JSX.Element {
           <Text preset="headingLarge" italic>
             NublbleApp
           </Text>
-          <Button loading preset="primary" marginBottom="s20" title="Primary" />
-          <Button
-            disabled
-            preset="primary"
-            marginBottom="s20"
-            title="Primary"
-          />
-          <Button preset="outline" marginBottom="s20" title="Outline" />
-          <Button disabled preset="outline" title="Loading" />
+          <Box flexDirection="row">
+            <Icon name="eyeOn" color="carrotLight" size={40} />
+            <Icon name="eyeOff" color="carrotSecondary" size={50} />
+          </Box>
         </View>
       </SafeAreaView>
     </ThemeProvider>
