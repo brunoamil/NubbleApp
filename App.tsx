@@ -14,8 +14,15 @@ function App(): JSX.Element {
           <Text preset="headingLarge" italic>
             NublbleApp
           </Text>
-          <Button marginBottom="s20" title="Entrar" />
-          <Button loading title="Loading" />
+          <Button loading preset="primary" marginBottom="s20" title="Primary" />
+          <Button
+            disabled
+            preset="primary"
+            marginBottom="s20"
+            title="Primary"
+          />
+          <Button preset="outline" marginBottom="s20" title="Outline" />
+          <Button disabled preset="outline" title="Loading" />
         </View>
       </SafeAreaView>
     </ThemeProvider>
