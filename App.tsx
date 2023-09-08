@@ -16,8 +16,20 @@ function App(): JSX.Element {
             NublbleApp
           </Text>
           <Box flexDirection="row">
-            <Icon name="eyeOn" color="carrotLight" size={40} />
-            <Icon name="eyeOff" color="carrotSecondary" size={50} />
+            <Icon name="chevronRight" size={50} />
+            <Icon name="heartFill" color="buttonPrimary" size={50} />
+            <Icon name="profile" size={50} />
+            <Icon name="profileFill" size={50} />
+            <Icon name="heart" size={50} />
+            <Icon name="bellOn" color="carrotSecondary" size={50} />
+          </Box>
+          <Box flexDirection="row">
+            <Icon name="newPost" size={50} />
+            <Icon name="camera" size={50} />
+            <Icon name="chat" size={50} />
+            <Icon name="chatOn" color="error" size={50} />
+            <Icon name="flashOff" size={50} />
+            <Icon name="flashOn" size={50} />
           </Box>
         </View>
       </SafeAreaView>
