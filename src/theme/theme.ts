@@ -16,7 +16,7 @@ const palette = {
   gray3: '#B3B3B3',
   gray4: '#E1E1E1',
   gray5: '#F5F5F5',
-  grayWhite: '#E1E1E1',
+  grayWhite: '#FFFFFF',
 };
 
 export const theme = createTheme({
