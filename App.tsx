@@ -1,12 +1,12 @@
 import React from 'react';
-import {SafeAreaView, TextInput, View} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import {ThemeProvider} from '@shopify/restyle';
 import {theme} from './src/theme/theme';
 
 import {Text} from './src/components/Text/Text';
-import {Box} from './src/components/Box/Box';
-import {Icon} from './src/components/Icon/Icon';
 import {Button} from './src/components/Button/Button';
+import {TextInput} from './src/components/TextInput/TextInput';
+import {Icon} from './src/components/Icon/Icon';
 
 function App(): JSX.Element {
   return (
@@ -19,18 +19,18 @@ function App(): JSX.Element {
           <Text preset="paragraphLarge" mb="s40">
             Digite seu e-mail e senha para entrar
           </Text>
-          <Box mb="s20">
-            <TextInput
-              placeholder="Digite seu e-mail"
-              style={{borderWidth: 1, height: 50}}
-            />
-          </Box>
-          <Box>
-            <TextInput
-              placeholder="Digite sua senha"
-              style={{borderWidth: 1, height: 50}}
-            />
-          </Box>
+          <TextInput
+            boxProps={{mb: 's20'}}
+            errorMessage="Error message"
+            label="E-mail"
+            placeholder="Digite seu e-mail"
+          />
+          <TextInput
+            boxProps={{mb: 's10'}}
+            label="Senha"
+            placeholder="Digite sua senha"
+            RightComponent={<Icon name="eyeOn" color="gray2" />}
+          />
           <Text preset="paragraphSmall" color="primary" bold mt="s10">
             Esqueci minha senha
           </Text>
