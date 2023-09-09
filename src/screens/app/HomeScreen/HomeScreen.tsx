@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, FlatList, Image, ListRenderItemInfo} from 'react-native';
+import {FlatList, ListRenderItemInfo} from 'react-native';
 
 import {Post, postService} from '@domain';
 
-import {Box, PostItem, Screen, Text} from '@components';
+import {PostItem, Screen} from '@components';
 import {AppTabScreenProps} from '@routes';
 
 // type ScreenProps = NativeStackScreenProps<AppStackParamList, 'HomeScreen'>;

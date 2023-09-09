@@ -1,24 +1,77 @@
 import React from 'react';
-import {Image} from 'react-native';
 
 import {Post} from '@domain';
 
-import {Box, Text} from '@components';
+import {Box, Icon, IconProps, Text, TouchableOpacityBox} from '@components';
 
-type Props = Pick<Post, 'author'>;
+type Props = Pick<Post, 'reactionCount' | 'commentCount' | 'favoriteCount'>;
 
-export function PostActions({author}: Props) {
+export function PostActions({
+  reactionCount,
+  commentCount,
+  favoriteCount,
+}: Props) {
+  function likePost() {
+    //  TODO: Implementar
+  }
+
+  function navigateToPost() {
+    //  TODO: Implementar
+  }
+
+  function favoritePost() {
+    //  TODO: Implementar
+  }
+
   return (
-    <Box mb="s24">
-      <Box flexDirection="row" alignItems="center" mb="s4">
-        <Image
-          source={{uri: author.profileURL}}
-          style={{width: 32, height: 32, borderRadius: 14}}
-        />
-        <Text preset="paragraphMedium" semiBold ml="s12">
-          {author.userName}
-        </Text>
-      </Box>
+    <Box flexDirection="row" mt="s16">
+      <Item
+        marked
+        onPress={likePost}
+        icon={{default: 'heart', marked: 'heartFill'}}
+        text={reactionCount}
+      />
+      <Item
+        marked={false}
+        onPress={navigateToPost}
+        icon={{default: 'comment', marked: 'comment'}}
+        text={commentCount}
+      />
+      <Item
+        marked
+        onPress={favoritePost}
+        icon={{default: 'bookmark', marked: 'bookmarkFill'}}
+        text={favoriteCount}
+      />
     </Box>
+  );
+}
+
+interface ItemProps {
+  onPress: () => void;
+  marked: boolean;
+  icon: {
+    default: IconProps['name'];
+    marked: IconProps['name'];
+  };
+  text: number;
+}
+function Item({onPress, icon, marked, text}: ItemProps) {
+  return (
+    <TouchableOpacityBox
+      flexDirection="row"
+      alignItems="center"
+      mr="s24"
+      onPress={onPress}>
+      <Icon
+        name={marked ? icon.marked : icon.default}
+        color={marked ? 'market' : undefined}
+      />
+      {text > 0 && (
+        <Text preset="paragraphSmall" bold ml="s4">
+          {text}
+        </Text>
+      )}
+    </TouchableOpacityBox>
   );
 }
