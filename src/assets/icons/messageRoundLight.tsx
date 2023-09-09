@@ -11,7 +11,7 @@ export function MessageRoundIcon({
 }: IconBase) {
   return (
     <Svg width={size} height={size} viewBox="0 0 48 48" fill="none">
-      <Circle cx="24" cy="24" r="24" fill="#EAF6F6" />
+      <Circle cx="24" cy="24" r="24" fill={color} />
       <Path
         fillRule="evenodd"
         clipRule="evenodd"

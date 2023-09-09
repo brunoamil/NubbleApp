@@ -38,7 +38,7 @@ module.exports = {
       },
     },
   ],
-  // rules: {
-  //   '@typescript-eslint/no-unused-vars': 1,
-  // },
+  rules: {
+    'react-native/no-inline-styles': 0,
+  },
 };
