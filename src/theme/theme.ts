@@ -6,7 +6,7 @@ export const palette = {
   greenPrimary: '#074C4E',
   greenPrimaryLight: '#EAF6F6',
   carrotSecondary: '#F86F2D',
-  carrotLight: '#FAE6DD',
+  carrotSecondaryLight: '#FAE6DD',
   greenSuccess: '#4ABC86',
   greenSuccessLight: '#D8FFEC',
   redError: '#EA3838',
