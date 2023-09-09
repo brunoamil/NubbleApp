@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useForm, Controller} from 'react-hook-form';
 

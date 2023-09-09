@@ -1,30 +1,38 @@
 import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {useForm} from 'react-hook-form';
 
 import {RootStackParamList} from '../../../routes/Routes';
 import {useResetNavigationSuccess} from '../../../hooks/useResetNavigationSuccess';
 import {Screen} from '../../../components/Screen/Screen';
 import {Text} from '../../../components/Text/Text';
-import {TextInput} from '../../../components/TextInput/TextInput';
 import {Button} from '../../../components/Button/Button';
-import {PasswordInput} from '../../../components/PasswordInput/PasswordInput';
+import {FormTextInput} from '../../../components/Form/FormTextInput/FormTextInput';
+import {FormPasswordInput} from '../../../components/Form/FormPasswordInput/FormPasswordInput';
 
+type SignUpFormType = {
+  username: string;
+  fullName: string;
+  email: string;
+  password: string;
+};
 type ScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUpScreen'>;
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 export function SignUpScreen({navigation}: ScreenProps) {
   const {reset} = useResetNavigationSuccess();
-
-  function submitForm() {
-    reset({
-      title: 'Sua conta foi criada com sucesso!',
-      description: 'Agora é só fazer login na nossa plataforma',
-      icon: {
-        name: 'checkRound',
-        color: 'success',
-      },
-    });
-    // navigation.navigate('SuccessScreen', {
+  const {control, formState, handleSubmit} = useForm<SignUpFormType>({
+    defaultValues: {
+      username: '',
+      fullName: '',
+      email: '',
+      password: '',
+    },
+    mode: 'onChange',
+  });
+  function submitForm(formValues: SignUpFormType) {
+    console.log('formValues', formValues);
+    // reset({
     //   title: 'Sua conta foi criada com sucesso!',
     //   description: 'Agora é só fazer login na nossa plataforma',
     //   icon: {
@@ -38,23 +46,58 @@ export function SignUpScreen({navigation}: ScreenProps) {
       <Text preset="headingLarge" mb="s32">
         Criar uma conta
       </Text>
-      <TextInput placeholder="@" label="Seu username" boxProps={{mb: 's20'}} />
-      <TextInput
-        placeholder="Nome completo"
-        label="Nome Completo"
+      <FormTextInput
+        control={control}
+        name="username"
+        rules={{required: 'Username obrigatório'}}
+        label="Seu username"
+        placeholder="@"
         boxProps={{mb: 's20'}}
       />
-      <TextInput
+      <FormTextInput
+        control={control}
+        name="fullName"
+        rules={{required: 'Nome completo obrigatório'}}
+        placeholder="Digite seu Nome completo"
+        label="Nome Completo"
+        boxProps={{mb: 's20'}}
+        autoCapitalize="words"
+      />
+
+      <FormTextInput
+        control={control}
+        name="email"
+        rules={{
+          required: 'E-mail obrigatório',
+          pattern: {
+            value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+            message: 'E-mail inválido',
+          },
+        }}
         placeholder="E-mail"
         label="Digite seu e-mail"
         boxProps={{mb: 's20'}}
       />
-      <PasswordInput
-        label="Nova senha"
-        placeholder="Digite sua nova senha"
+      <FormPasswordInput
+        control={control}
+        name="password"
+        rules={{
+          required: 'Senha obrigatória',
+          minLength: {
+            value: 8,
+            message: 'A senha deve conter no mínimo 8 caracteres',
+          },
+        }}
+        label="Senha"
+        placeholder="Digite sua senha"
         boxProps={{mb: 's48'}}
       />
-      <Button onPress={submitForm} title="Criar uma conta" />
+
+      <Button
+        disabled={!formState.isValid}
+        onPress={handleSubmit(submitForm)}
+        title="Criar uma conta"
+      />
     </Screen>
   );
 }
