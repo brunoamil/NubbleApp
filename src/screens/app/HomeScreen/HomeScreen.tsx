@@ -14,7 +14,10 @@ export function HomeScreen({navigation}: AppTabScreenProps<'HomeScreen'>) {
   const [postList, setPostList] = useState<Post[]>([]);
 
   useEffect(() => {
-    postService.getList().then(list => setPostList(list));
+    postService.getList().then(list => {
+      setPostList(list);
+      console.log('listsss', list);
+    });
   }, []);
 
   function renderItem({item}: ListRenderItemInfo<Post>) {
