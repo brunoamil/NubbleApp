@@ -1,7 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
+import React from 'react';
+import {
+  FlatList,
+  ListRenderItemInfo,
+  RefreshControl,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 
-import {Post, postService} from '@domain';
+import {Post, usePostList} from '@domain';
+import {useScrollToTop} from '@react-navigation/native';
 
 import {PostItem, Screen} from '@components';
 import {AppTabScreenProps} from '@routes';
@@ -12,26 +19,11 @@ import {HomeHeader} from './components/HomeHeader';
 // type ScreenProps = NativeStackScreenProps<AppStackParamList, 'HomeScreen'>;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function HomeScreen({navigation}: AppTabScreenProps<'HomeScreen'>) {
-  const [loading, setLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState<boolean | null>(null);
+  const flatListRef = React.useRef<FlatList<Post>>(null);
+  useScrollToTop(flatListRef);
 
-  const [postList, setPostList] = useState<Post[]>([]);
-
-  async function fetchData() {
-    try {
-      setErrorMessage(null);
-      setLoading(true);
-      const list = await postService.getList();
-      setPostList(list);
-    } catch (error) {
-      setErrorMessage(true);
-    } finally {
-      setLoading(false);
-    }
-  }
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const {postList, loading, errorMessage, refresh, fetchNextPage} =
+    usePostList();
 
   function renderItem({item}: ListRenderItemInfo<Post>) {
     return <PostItem post={item} />;
@@ -40,18 +32,21 @@ export function HomeScreen({navigation}: AppTabScreenProps<'HomeScreen'>) {
   return (
     <Screen style={$screen}>
       <FlatList
+        ref={flatListRef}
         showsVerticalScrollIndicator={false}
         data={postList}
         keyExtractor={item => item.id}
         renderItem={renderItem}
+        onEndReached={fetchNextPage}
+        onEndReachedThreshold={0.1}
+        refreshing={loading}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={refresh} />
+        }
         contentContainerStyle={{flex: postList.length === 0 ? 1 : undefined}}
         ListHeaderComponent={<HomeHeader />}
         ListEmptyComponent={
-          <HomeEmpty
-            loading={loading}
-            error={errorMessage}
-            refetch={fetchData}
-          />
+          <HomeEmpty loading={loading} error={errorMessage} refetch={refresh} />
         }
       />
     </Screen>
