@@ -2,7 +2,7 @@ import {MetaDataPage} from '@types';
 
 import {MetaDataPageAPI} from './apiTypes';
 
-export function toMetaDataPage(meta: MetaDataPageAPI): MetaDataPage {
+function toMetaDataPage(meta: MetaDataPageAPI): MetaDataPage {
   return {
     total: meta.total,
     perPage: meta.per_page,
