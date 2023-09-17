@@ -25,7 +25,6 @@ export function ForgotPasswordScreen({
     mode: 'onChange',
   });
   function submitForm(values: ForgotPasswordSchemaType) {
-    console.log('values', values);
     reset({
       title: `Enviamos as instruções ${'\n'}para seu e-mail`,
       description:
