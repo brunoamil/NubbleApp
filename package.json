@@ -9,7 +9,8 @@
     "start": "react-native start",
     "test": "jest",
     "prepare": "husky install",
-    "art:3333": "adb reverse tcp:3333 tcp:3333"
+    "art:3333": "adb reverse tcp:3333 tcp:3333",
+    "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
