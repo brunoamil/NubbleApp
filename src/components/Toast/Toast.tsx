@@ -1,50 +1,53 @@
-import React, {useEffect} from 'react';
-import {Dimensions} from 'react-native';
+import React, {useCallback, useEffect, useRef} from 'react';
+import {Animated} from 'react-native';
 
 import {useToast, useToastService} from '@services';
 
-import {$shadowProps} from '@theme';
+import {ToastContent} from './components/ToastContent';
 
-import {Box, BoxProps} from '../Box/Box';
-import {Icon} from '../Icon/Icon';
-import {Text} from '../Text/Text';
-
-const MAX_WIDTH = Dimensions.get('screen').width * 0.9;
+const DEFAULT_DURATION = 2000;
 
 export function Toast() {
   const toast = useToast();
   const {hideToast} = useToastService();
 
+  const fadeAnim = useRef(new Animated.Value(0.5)).current;
+
+  const runEnterimAnimation = useCallback(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
+
+  const runExitingAnimation = useCallback(
+    (callback: Animated.EndCallback) => {
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 1000,
+        useNativeDriver: true,
+      }).start(callback);
+    },
+    [fadeAnim],
+  );
+
   useEffect(() => {
     if (toast) {
+      runEnterimAnimation();
       setTimeout(() => {
-        hideToast();
-      }, 2000);
+        runExitingAnimation(hideToast);
+      }, toast.duration || DEFAULT_DURATION);
     }
-  }, [toast, hideToast]);
+  }, [toast, hideToast, runEnterimAnimation, runExitingAnimation]);
 
   if (!toast) {
     return null;
   }
   return (
-    <Box {...$boxStyle} top={100}>
-      <Icon name="checkRound" color="success" />
-      <Text ml="s16" preset="paragraphMedium" bold style={{flexShrink: 1}}>
-        {toast?.message}
-      </Text>
-    </Box>
+    <Animated.View
+      style={{position: 'absolute', alignSelf: 'center', opacity: fadeAnim}}>
+      <ToastContent toast={toast} />
+    </Animated.View>
   );
 }
-
-const $boxStyle: BoxProps = {
-  position: 'absolute',
-  alignSelf: 'center',
-  flexDirection: 'row',
-  alignItems: 'center',
-  padding: 's16',
-  borderRadius: 's16',
-  backgroundColor: 'background',
-  style: {...$shadowProps},
-  opacity: 0.95,
-  maxWidth: MAX_WIDTH,
-};
