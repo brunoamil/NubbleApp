@@ -8,3 +8,5 @@ export * from './PostComment/useCases/usePostCommentList';
 export * from './PostComment/useCases/usePostCommentRemove';
 
 export * from './Auth';
+
+export * from './User';
