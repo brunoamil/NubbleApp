@@ -1,2 +1,2 @@
 export * from './authCredentialsType';
-export * from './Toast';
+export * from './useAuthCredentials';
