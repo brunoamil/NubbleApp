@@ -1,7 +1,7 @@
 import {useState} from 'react';
 
 export interface MutationOptions<TData> {
-  onSuccess: (data: TData) => void;
+  onSuccess?: (data: TData) => void;
   onError?: (message: string) => void;
   errorMessage?: string;
 }

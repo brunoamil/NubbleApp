@@ -19,7 +19,7 @@ import {AuthStack} from './AuthStack';
 // const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function Router() {
-  const authenticated = true;
+  const authenticated = false;
 
   return (
     <NavigationContainer>
